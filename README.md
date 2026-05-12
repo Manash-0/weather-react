@@ -6,8 +6,6 @@ STORMFRONT is a full-stack, real-time weather application that transforms basic 
 
 Powered by React, Three.js, and Google Gemini AI, it dynamically renders particle systems, volumetric clouds, and procedural lightning based on real live weather data from OpenWeatherMap.
 
-![STORMFRONT Showcase](https://raw.githubusercontent.com/Manash-0/weather-react/main/client/public/vite.svg) *(Replace with actual screenshot)*
-
 ## Technology Stack
 
 **Frontend:**
