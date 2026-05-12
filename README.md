@@ -1,5 +1,7 @@
 # 🌩️ STORMFRONT | Immersive 3D Weather Experience
 
+**🌟 Live Demo:** [https://weather-react-ebon.vercel.app/](https://weather-react-ebon.vercel.app/)
+
 STORMFRONT is a full-stack, real-time weather application that transforms basic meteorological data into an immersive 3D cinematic experience right in your browser. 
 
 Powered by React, Three.js, and Google Gemini AI, it dynamically renders particle systems, volumetric clouds, and procedural lightning based on real live weather data from OpenWeatherMap.
@@ -76,6 +78,6 @@ npm run dev
 
 ## 🌍 Deployment
 
-STORMFRONT is ready for production. You can deploy it using modern cloud platforms (Vercel + Render) or via the included Docker container. 
-
-Please refer to the **[DEPLOYMENT_STEPS.md](./DEPLOYMENT_STEPS.md)** file for a comprehensive, step-by-step guide on how to get the application live on the internet for free.
+STORMFRONT is ready for production and is actively deployed using:
+* **Frontend:** Vercel
+* **Backend:** Render (Docker Environment)
