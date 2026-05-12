@@ -1,4 +1,4 @@
-# 🌩️ STORMFRONT | Immersive 3D Weather Experience
+#  STORMFRONT | Immersive 3D Weather Experience
 
 =>[link](https://weather-react-ebon.vercel.app/)
 
@@ -28,7 +28,7 @@ Powered by React, Three.js, and Google Gemini AI, it dynamically renders particl
 
 ---
 
-## 🚀 Quick Start (Local Development)
+##  Quick Start (Local Development)
 
 ### 1. Clone & Install
 ```bash
@@ -63,7 +63,7 @@ npm run dev
 
 ---
 
-## 🌍 Deployment
+##  Deployment
 
 STORMFRONT is ready for production and is actively deployed using:
 * **Frontend:** Vercel
