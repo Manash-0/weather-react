@@ -1,26 +1,41 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
-
-
 const { GoogleGenAI } = require('@google/genai');
 
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+// Initialize AI only if API key is available
+let ai = null;
+if (process.env.GEMINI_API_KEY) {
+  ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+} else {
+  console.warn('WARNING: GEMINI_API_KEY not found. AI chat will be disabled.');
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
+// Middleware
 app.use(express.json());
-app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-  res.render('index');
+// CORS middleware for development
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
 });
 
-app.post('/weather', async (req, res) => {
+// Serve static files from React build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+}
+
+// API Routes
+app.post('/api/weather', async (req, res) => {
   const { city } = req.body;
   const apiKey = process.env.WEATHER_API_KEY;
 
@@ -48,7 +63,7 @@ app.post('/weather', async (req, res) => {
   }
 });
 
-app.post('/weather-by-coords', async (req, res) => {
+app.post('/api/weather-by-coords', async (req, res) => {
   const { lat, lon } = req.body;
   const apiKey = process.env.WEATHER_API_KEY;
 
@@ -71,11 +86,14 @@ app.post('/weather-by-coords', async (req, res) => {
   }
 });
 
-app.post('/chat', async (req, res) => {
+app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
 
-  try {
+  if (!ai) {
+    return res.status(503).json({ error: 'AI chat is not configured. Please add GEMINI_API_KEY to your .env file.' });
+  }
 
+  try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: [{ role: 'user', parts: [{ text: `You are a friendly weather assistant. The user says: ${message}` }] }],
@@ -88,6 +106,37 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+// Serve React app for all non-API routes in production
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  });
+}
+
+const server = app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
+  if (!process.env.WEATHER_API_KEY) {
+    console.warn('WARNING: WEATHER_API_KEY not found. Weather features will not work.');
+    console.log('Create a .env file in the root directory with your API keys.');
+  }
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n❌ ERROR: Port ${PORT} is already in use.`);
+    console.error(`This usually means another instance of the server is already running in the background.`);
+    console.error(`Please kill the existing process or change the PORT in your .env file.\n`);
+    process.exit(1);
+  } else {
+    console.error('Server error:', err);
+  }
+});
+
+// Keep the process alive and handle errors
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
 });
