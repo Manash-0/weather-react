@@ -1,6 +1,6 @@
 # 🌩️ STORMFRONT | Immersive 3D Weather Experience
 
-**🌟 Live Demo:** [https://weather-react-ebon.vercel.app/](https://weather-react-ebon.vercel.app/)
+**link(https://weather-react-ebon.vercel.app/)
 
 STORMFRONT is a full-stack, real-time weather application that transforms basic meteorological data into an immersive 3D cinematic experience right in your browser. 
 
@@ -8,20 +8,7 @@ Powered by React, Three.js, and Google Gemini AI, it dynamically renders particl
 
 ![STORMFRONT Showcase](https://raw.githubusercontent.com/Manash-0/weather-react/main/client/public/vite.svg) *(Replace with actual screenshot)*
 
-## ✨ Features
-
-* **Real-time 3D Climates:** The background canvas dynamically shifts between 6 distinct atmospheric scenes:
-  * **Thunderstorms:** Procedural branching lightning bolts, screen shake physics, and heavy instanced rain.
-  * **Rain/Drizzle:** Steady particle rainfall with moody overcast lighting.
-  * **Snow:** Floating particle snowflakes with icy blue ambient lighting and additive blending.
-  * **Clear:** Glowing animated sun with warm god rays and drifting fair-weather clouds.
-  * **Clouds/Fog:** Volumetric cloud layers with dense ground fog.
-* **Glassmorphic UI:** A sleek, frosted-glass interface that floats above the 3D scene.
-* **Mood Engine:** Translates raw weather data into carefully curated color palettes, post-processing effects (bloom, vignette, chromatic aberration), and particle physics settings.
-* **AI Weather Assistant:** A built-in Gemini-powered chat assistant that can answer questions about the weather, climate, or anything else you ask it.
-* **Auto-Location:** Instantly detects your location and fetches local weather coordinates.
-
-## 🛠️ Technology Stack
+## Technology Stack
 
 **Frontend:**
 * React 19 + Vite
